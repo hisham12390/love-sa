@@ -10,51 +10,85 @@
 body{
 margin:0;
 height:100vh;
-background-image:url("love.jpg");
+background-image:url("love1.jpg");
 background-size:cover;
 background-position:center;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
 color:white;
 font-family:'Cairo', sans-serif;
+transition:1s;
 }
 
 .text{
 font-size:40px;
 width:70%;
 text-shadow:2px 2px 10px black;
+margin-bottom:30px;
+}
+
+button{
+padding:15px 35px;
+font-size:20px;
+border:none;
+border-radius:30px;
+background:#2ecc71;
+color:white;
+cursor:pointer;
+box-shadow:0 0 15px rgba(0,0,0,0.5);
+}
+
+button:hover{
+transform:scale(1.1);
 }
 
 </style>
 </head>
 
-<body> 
-
-  <audio controls autoplay loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
-
+<body>
 
 <div class="text" id="message"></div>
 
+<button onclick="nextScene()">اضغط هنا ❤️</button>
+
+<audio id="music" autoplay loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
-let text = "الى صاحبة العيون الخضراء حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
+let text1 = "حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
+let text2 = "ومذ تلك اللحظة أدركت أن قلبي وجد موطنه الحقيقي بين عينيكِ.";
 
 let i = 0;
 
-function typeWriter(){
+function typeWriter(text){
+document.getElementById("message").innerHTML="";
+i=0;
+
+function write(){
 if(i < text.length){
 document.getElementById("message").innerHTML += text.charAt(i);
 i++;
-setTimeout(typeWriter,80);
+setTimeout(write,60);
 }
 }
 
-typeWriter();
+write();
+}
+
+typeWriter(text1);
+
+function nextScene(){
+
+document.body.style.backgroundImage="url('love2.jpg')";
+
+typeWriter(text2);
+
+}
 
 </script>
 
