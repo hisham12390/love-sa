@@ -98,8 +98,9 @@ if(scene==2){
 document.body.style.backgroundImage="url('love2.jpg')";
 typeWriter(quote1);
 
-}
+document.getElementById("nextBtn").innerHTML="التالي ➜";
 
+}
 else if(scene==3){
 
 document.body.style.backgroundImage="url('love3.jpg')";
@@ -153,6 +154,16 @@ no.style.transform="scale("+noSize+")";
 
 function yesAnswer(){
 
+document.body.style.backgroundImage="url('love4.jpg')";
+
+typeWriter(quote2);
+
+let buttons = document.querySelectorAll("button");
+buttons.forEach(btn => btn.style.display="none");
+
+fireworks();
+
+}
 document.body.style.backgroundImage="url('love4.jpg')";
 
 typeWriter(quote2);
