@@ -58,6 +58,19 @@ position:absolute;
 
 body{
 margin:0;
+height:100vh;<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+body{
+margin:0;
 height:100vh;
 background-image:url("love.jpg");
 background-size:cover;
@@ -70,6 +83,7 @@ text-align:center;
 color:white;
 font-family:'Cairo', sans-serif;
 transition:1s;
+overflow:hidden;
 }
 
 .text{
@@ -88,21 +102,38 @@ background:#2ecc71;
 color:white;
 cursor:pointer;
 box-shadow:0 0 15px rgba(0,0,0,0.5);
+margin:10px;
 }
 
 button:hover{
 transform:scale(1.1);
 }
 
+#questionBox{
+display:none;
+font-size:35px;
+}
+
+#noBtn{
+background:#e74c3c;
+position:absolute;
+}
+
 </style>
 </head>
-<body> 
 
-<div id="message"></div>
+<body>
 
-<button onclick="nextScene()">اضغط هنا ❤️</button>
+<audio autoplay loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
 
-<div id="questionBox" style="display:none;">
+<div class="text" id="message"></div>
+
+<button id="startBtn" onclick="nextScene()">اضغطي هنا ❤️</button>
+
+
+<div id="questionBox">
 
 <p>هل ممكن كل عيد تكونين أنتِ عيدي؟</p>
 
@@ -112,28 +143,50 @@ transform:scale(1.1);
 
 </div>
 
-<audio autoplay loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
-<audio controls autoplay loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<div class="text" id="message"></div>
-
-<button onclick="nextScene()">اضغطي هنا ❤️</button>
-
-
 
 <script>
 
-function nextScene(){
+let text1 = "حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
+let text2 = "وفي ليلة العيد، بين الأضواء والفرح، أدركت أن أجمل أعيادي هي تلك التي تكونين فيها بقربي.";
 
-document.body.style.backgroundImage="url('eid.jpg')";
+let i = 0;
 
-document.getElementById("questionBox").style.display="block";
+function typeWriter(text){
+
+document.getElementById("message").innerHTML="";
+i=0;
+
+function write(){
+if(i < text.length){
+document.getElementById("message").innerHTML += text.charAt(i);
+i++;
+setTimeout(write,60);
+}
+}
+
+write();
 
 }
+
+typeWriter(text1);
+
+
+
+function nextScene(){
+
+document.body.style.backgroundImage="url('love2.jpg')";
+
+typeWriter(text2);
+
+document.getElementById("startBtn").style.display="none";
+
+setTimeout(()=>{
+document.getElementById("questionBox").style.display="block";
+},3000);
+
+}
+
+
 
 let yes = document.getElementById("yesBtn");
 let no = document.getElementById("noBtn");
@@ -157,11 +210,20 @@ no.style.transform="scale("+noSize+")";
 
 });
 
+
+
 function yesAnswer(){
+
+document.body.style.backgroundImage="url('love3.jpg')";
+
+document.getElementById("questionBox").innerHTML =
+"<h1>إذن… كل أعيادي ستكون معك ❤️</h1>";
 
 fireworks();
 
 }
+
+
 
 function fireworks(){
 
@@ -189,41 +251,6 @@ requestAnimationFrame(frame);
 }
 
 }());
-
-}
-
-</script>
-
-</body>
-  
-
-let text1 = "حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
-let text2 = "وفي ليلة العيد، بين الأضواء والفرح، أدركت أن أجمل أعيادي هي تلك التي تكونين فيها بقربي.";
-
-let i = 0;
-
-function typeWriter(text){
-document.getElementById("message").innerHTML="";
-i=0;
-
-function write(){
-if(i < text.length){
-document.getElementById("message").innerHTML += text.charAt(i);
-i++;
-setTimeout(write,60);
-}
-}
-
-write();
-}
-
-typeWriter(text1);
-
-function nextScene(){
-
-document.body.style.backgroundImage="url('love2.jpg')";
-
-typeWriter(text2);
 
 }
 
