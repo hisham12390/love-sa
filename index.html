@@ -2,7 +2,9 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+
 <style>
 body{
   margin:0;
@@ -55,13 +57,14 @@ button{
 }
 </style>
 </head>
+
 <body>
 
 <audio autoplay loop>
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="text" id="message">هل أنتِ جاهزة؟</div>
+<div class="text" id="message">اهلا صافيه هاي هدية الكي ف أنتِ جاهزة:)؟</div>
 <button id="nextBtn">نعم جاهزة ❤️</button>
 
 <!-- صور الفراشات -->
@@ -76,8 +79,8 @@ button{
 <script>
 // ---------- النصوص والأزرار ----------
 let scene = 1;
-let quote1 = "حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
-let quote2 = "وفي ليلة العيد، بين الأضواء والفرح، أدركت أن أجمل أعيادي هي تلك التي تكونين فيها بقربي.";
+let quote1 = "الى صاحبة الاعين الخضراء حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
+let quote2 = " وبليلة العيد، بين الأضواء والفرح، عغفتو أن أجمل أعيادي هي تلك التي تكونين فيها بقربي.";
 
 function typeWriter(text){
   let i = 0;
@@ -97,16 +100,16 @@ function nextScene(){
   if(scene==2){
     document.body.style.backgroundImage="url('love2.jpg')";
     typeWriter(quote1);
+    document.getElementById("nextBtn").innerHTML="التالي ➜";
   }
   else if(scene==3){
     document.body.style.backgroundImage="url('love3.jpg')";
-    document.getElementById("message").innerHTML="هل مستعدة أن تكوني أنتِ عيدي؟";
+    document.getElementById("message").innerHTML="هل ممكن تكونين أنتِ عيدي؟";
     document.getElementById("nextBtn").style.display="none";
     createButtons();
   }
 }
 
-// ---------- إنشاء أزرار نعم / لا ----------
 function createButtons(){
   let yes=document.createElement("button");
   yes.innerHTML="نعم ❤️";
@@ -116,10 +119,8 @@ function createButtons(){
   no.id="noBtn";
   document.body.appendChild(yes);
   document.body.appendChild(no);
-
   let yesSize=1;
   let noSize=1;
-
   no.addEventListener("mouseover",function(){
     let x=Math.random()*window.innerWidth*0.8;
     let y=Math.random()*window.innerHeight*0.8;
@@ -132,94 +133,25 @@ function createButtons(){
   });
 }
 
-// ---------- نعم الإجابة ----------
 function yesAnswer(){
   document.body.style.backgroundImage="url('love4.jpg')";
   typeWriter(quote2);
   let buttons=document.querySelectorAll("button");
   buttons.forEach(btn=>btn.style.display="none");
-  celebrateEffect();
+  fireworks();
 }
 
-// ---------- التأثيرات الاحتفالية ----------
-function celebrateEffect(){
-  // 1️⃣ كونفيتي
-  confetti({
-    particleCount:50,
-    spread:90,
-    origin:{x:0.5, y:0.5},
-    colors:['#FF3F8E','#04C2C9','#2E55C1','#FFB400']
-  });
-
-  // 2️⃣ فقاعات
-  for(let i=0;i<20;i++){
-    createBubble();
-  }
-
-  // 3️⃣ نجوم
-  for(let i=0;i<15;i++){
-    createStar();
-  }
-
-  // 4️⃣ نبض النص
-  pulseEffect(document.getElementById("message"));
+function fireworks(){
+  var duration=5000;
+  var end=Date.now()+duration;
+  (function frame(){
+    confetti({particleCount:6, angle:60, spread:55, origin:{x:0}});
+    confetti({particleCount:6, angle:120, spread:55, origin:{x:1}});
+    if(Date.now()<end){requestAnimationFrame(frame);}
+  }());
 }
 
-// فقاعات
-function createBubble(){
-  let bubble=document.createElement('div');
-  bubble.style.position='absolute';
-  bubble.style.width=bubble.style.height='20px';
-  bubble.style.borderRadius='50%';
-  bubble.style.background='rgba(255,255,255,0.7)';
-  bubble.style.left=Math.random()*window.innerWidth+'px';
-  bubble.style.top=window.innerHeight+'px';
-  bubble.style.zIndex=5;
-  document.body.appendChild(bubble);
-
-  let top=window.innerHeight;
-  let id=setInterval(()=>{
-    top-=3+Math.random()*2;
-    bubble.style.top=top+'px';
-    bubble.style.opacity-=0.01;
-    if(top<-50){
-      clearInterval(id);
-      bubble.remove();
-    }
-  },16);
-}
-
-// نجوم
-function createStar(){
-  let star=document.createElement('div');
-  star.style.position='absolute';
-  star.style.width=star.style.height='8px';
-  star.style.background='yellow';
-  star.style.borderRadius='50%';
-  star.style.left=Math.random()*window.innerWidth+'px';
-  star.style.top=Math.random()*window.innerHeight+'px';
-  star.style.opacity=1;
-  document.body.appendChild(star);
-
-  let life=50;
-  let id=setInterval(()=>{
-    star.style.opacity-=0.02;
-    life--;
-    if(life<=0){
-      clearInterval(id);
-      star.remove();
-    }
-  },16);
-}
-
-// نبض النص
-function pulseEffect(element){
-  element.style.transition='transform 0.2s';
-  element.style.transform='scale(1.2)';
-  setTimeout(()=>element.style.transform='scale(1)',200);
-}
-
-// ---------- حركة الفراشات في كل الشاشة ----------
+// ---------- حركة الفراشات في كل الشاشة مع جناح متموج ----------
 const butterflyElements = Array.from(document.querySelectorAll(".butterfly"));
 const butterflies = butterflyElements.map(el => ({
     el,
@@ -253,11 +185,8 @@ function animateButterflies(){
 
 animateButterflies();
 
-// ---------- ربط الزر الرئيسي ----------
-document.getElementById("nextBtn").addEventListener("click", ()=>{
-  nextScene();
-  celebrateEffect(); // تأثير احتفالي عند الضغط على أي زر
-});
+// ---------- الزر الرئيسي ----------
+document.getElementById("nextBtn").addEventListener("click", nextScene);
 </script>
 </body>
 </html>
