@@ -20,7 +20,7 @@ body{
   font-family:'Cairo', sans-serif;
   overflow:hidden;
   background-image:url("love1.jpg");
-  perspective: 1000px; /* لإحساس العمق ثلاثي الأبعاد */
+  perspective: 1000px; 
 }
 
 .text{
@@ -53,7 +53,6 @@ button{
   transform-style: preserve-3d;
   transition: transform 0.1s linear;
 }
-
 </style>
 </head>
 
@@ -77,7 +76,6 @@ button{
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-
 // ---------- النصوص والأزرار ----------
 let scene = 1;
 let quote1 = "حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
@@ -152,7 +150,7 @@ function fireworks(){
   }());
 }
 
-// ---------- حركة الفراشات الديناميكية ----------
+// ---------- حركة الفراشات في كل مكان مع جناح متموج ----------
 const butterflyElements = Array.from(document.querySelectorAll(".butterfly"));
 const butterflies = butterflyElements.map(el => {
   return {
@@ -163,7 +161,8 @@ const butterflies = butterflyElements.map(el => {
     dx: Math.random()*2-1,
     dy: Math.random()*1.5-0.75,
     dz: Math.random()*1-0.5,
-    flap: Math.random()*360 // زاوية الأجنحة
+    flap: Math.random()*360,
+    flapSpeed: Math.random()*0.3 + 0.2
   }
 });
 
@@ -172,22 +171,21 @@ function animateButterflies(){
     b.x += b.dx;
     b.y += b.dy;
     b.z += b.dz;
-    b.flap += 5; // حركة الأجنحة
+    b.flap += b.flapSpeed*10;
 
-    // انعكاس عند حدود الشاشة
+    // انعكاس عند حدود الشاشة (كل الصفحة)
     if(b.x > window.innerWidth-80 || b.x < 0) b.dx*=-1;
     if(b.y > window.innerHeight-80 || b.y < 0) b.dy*=-1;
     if(b.z > 250 || b.z < -250) b.dz*=-1;
 
-    // تحريك الفراشة مع حركة الأجنحة
-    b.el.style.transform = `translate3d(${b.x}px, ${b.y}px, ${b.z}px) rotateY(${b.flap}deg) rotateX(${Math.sin(b.flap*Math.PI/180)*15}deg)`;
+    // حركة جناح متموج
+    let wing = Math.sin(b.flap*Math.PI/180)*15;
+    b.el.style.transform = `translate3d(${b.x}px, ${b.y}px, ${b.z}px) rotateY(${b.flap}deg) rotateX(${wing}deg)`;
   });
   requestAnimationFrame(animateButterflies);
 }
 
 animateButterflies();
-
 </script>
-
 </body>
 </html>
