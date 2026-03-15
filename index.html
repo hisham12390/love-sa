@@ -5,48 +5,53 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <style>
-
 body{
-margin:0;
-height:100vh;
-background-size:cover;
-background-position:center;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-color:white;
-font-family:'Cairo', sans-serif;
-transition:1s;
-overflow:hidden;
-background-image:url("love1.jpg");
+  margin:0;
+  height:100vh;
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:white;
+  font-family:'Cairo', sans-serif;
+  overflow:hidden;
+  background-image:url("love1.jpg");
+  perspective: 1000px; /* لإحساس العمق ثلاثي الأبعاد */
 }
 
 .text{
-font-size:38px;
-width:70%;
-text-shadow:2px 2px 10px black;
-margin-bottom:30px;
+  font-size:38px;
+  width:70%;
+  text-shadow:2px 2px 10px black;
+  margin-bottom:30px;
 }
 
 button{
-padding:15px 35px;
-font-size:20px;
-border:none;
-border-radius:30px;
-background:#2ecc71;
-color:white;
-cursor:pointer;
-margin:10px;
+  padding:15px 35px;
+  font-size:20px;
+  border:none;
+  border-radius:30px;
+  background:#2ecc71;
+  color:white;
+  cursor:pointer;
+  margin:10px;
 }
 
 #noBtn{
-background:#e74c3c;
-position:absolute;
+  background:#e74c3c;
+  position:absolute;
+}
+
+.butterfly{
+  position: absolute;
+  width: 80px;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  transition: transform 0.1s linear;
 }
 
 </style>
@@ -62,165 +67,126 @@ position:absolute;
 
 <button id="nextBtn" onclick="nextScene()">نعم جاهزة ❤️</button>
 
+<!-- صور الفراشات -->
+<img src="butterfly1.png" class="butterfly">
+<img src="butterfly2.png" class="butterfly">
+<img src="butterfly3.png" class="butterfly">
+<img src="butterfly4.png" class="butterfly">
+<img src="butterfly5.png" class="butterfly">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <script>
 
+// ---------- النصوص والأزرار ----------
 let scene = 1;
-
 let quote1 = "حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
 let quote2 = "وفي ليلة العيد، بين الأضواء والفرح، أدركت أن أجمل أعيادي هي تلك التي تكونين فيها بقربي.";
 
 function typeWriter(text){
-
-let i = 0;
-document.getElementById("message").innerHTML="";
-
-function write(){
-if(i < text.length){
-document.getElementById("message").innerHTML += text.charAt(i);
-i++;
-setTimeout(write,60);
-}
-}
-
-write();
-
+  let i = 0;
+  document.getElementById("message").innerHTML="";
+  function write(){
+    if(i < text.length){
+      document.getElementById("message").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(write,60);
+    }
+  }
+  write();
 }
 
 function nextScene(){
-
-scene++;
-
-if(scene==2){
-
-document.body.style.backgroundImage="url('love2.jpg')";
-typeWriter(quote1);
-document.getElementById("nextBtn").innerHTML="التالي ➜";
-
-}
-
-else if(scene==3){
-
-document.body.style.backgroundImage="url('love3.jpg')";
-document.getElementById("message").innerHTML="هل مستعدة أن تكوني أنتِ عيدي؟";
-document.getElementById("nextBtn").style.display="none";
-
-createButtons();
-
-}
-
+  scene++;
+  if(scene==2){
+    document.body.style.backgroundImage="url('love2.jpg')";
+    typeWriter(quote1);
+    document.getElementById("nextBtn").innerHTML="التالي ➜";
+  }
+  else if(scene==3){
+    document.body.style.backgroundImage="url('love3.jpg')";
+    document.getElementById("message").innerHTML="هل مستعدة أن تكوني أنتِ عيدي؟";
+    document.getElementById("nextBtn").style.display="none";
+    createButtons();
+  }
 }
 
 function createButtons(){
-
-let yes=document.createElement("button");
-yes.innerHTML="نعم ❤️";
-yes.onclick=yesAnswer;
-
-let no=document.createElement("button");
-no.innerHTML="لا";
-no.id="noBtn";
-
-document.body.appendChild(yes);
-document.body.appendChild(no);
-
-let yesSize=1;
-let noSize=1;
-
-no.addEventListener("mouseover",function(){
-
-let x=Math.random()*window.innerWidth*0.8;
-let y=Math.random()*window.innerHeight*0.8;
-
-no.style.left=x+"px";
-no.style.top=y+"px";
-
-yesSize+=0.1;
-noSize-=0.05;
-
-yes.style.transform="scale("+yesSize+")";
-no.style.transform="scale("+noSize+")";
-
-});
-
+  let yes=document.createElement("button");
+  yes.innerHTML="نعم ❤️";
+  yes.onclick=yesAnswer;
+  let no=document.createElement("button");
+  no.innerHTML="لا";
+  no.id="noBtn";
+  document.body.appendChild(yes);
+  document.body.appendChild(no);
+  let yesSize=1;
+  let noSize=1;
+  no.addEventListener("mouseover",function(){
+    let x=Math.random()*window.innerWidth*0.8;
+    let y=Math.random()*window.innerHeight*0.8;
+    no.style.left=x+"px";
+    no.style.top=y+"px";
+    yesSize+=0.1;
+    noSize-=0.05;
+    yes.style.transform="scale("+yesSize+")";
+    no.style.transform="scale("+noSize+")";
+  });
 }
 
 function yesAnswer(){
-
-document.body.style.backgroundImage="url('love4.jpg')";
-
-typeWriter(quote2);
-
-let buttons=document.querySelectorAll("button");
-buttons.forEach(btn=>btn.style.display="none");
-
-fireworks();
-
+  document.body.style.backgroundImage="url('love4.jpg')";
+  typeWriter(quote2);
+  let buttons=document.querySelectorAll("button");
+  buttons.forEach(btn=>btn.style.display="none");
+  fireworks();
 }
 
 function fireworks(){
+  var duration=5000;
+  var end=Date.now()+duration;
+  (function frame(){
+    confetti({particleCount:6, angle:60, spread:55, origin:{x:0}});
+    confetti({particleCount:6, angle:120, spread:55, origin:{x:1}});
+    if(Date.now()<end){requestAnimationFrame(frame);}
+  }());
+}
 
-var duration=5000;
-var end=Date.now()+duration;
-
-(function frame(){
-
-confetti({
-particleCount:6,
-angle:60,
-spread:55,
-origin:{x:0}
+// ---------- حركة الفراشات الديناميكية ----------
+const butterflyElements = Array.from(document.querySelectorAll(".butterfly"));
+const butterflies = butterflyElements.map(el => {
+  return {
+    el,
+    x: Math.random()*window.innerWidth,
+    y: Math.random()*window.innerHeight,
+    z: Math.random()*500-250,
+    dx: Math.random()*2-1,
+    dy: Math.random()*1.5-0.75,
+    dz: Math.random()*1-0.5,
+    flap: Math.random()*360 // زاوية الأجنحة
+  }
 });
 
-confetti({
-particleCount:6,
-angle:120,
-spread:55,
-origin:{x:1}
-});
+function animateButterflies(){
+  butterflies.forEach(b=>{
+    b.x += b.dx;
+    b.y += b.dy;
+    b.z += b.dz;
+    b.flap += 5; // حركة الأجنحة
 
-if(Date.now()<end){
-requestAnimationFrame(frame);
+    // انعكاس عند حدود الشاشة
+    if(b.x > window.innerWidth-80 || b.x < 0) b.dx*=-1;
+    if(b.y > window.innerHeight-80 || b.y < 0) b.dy*=-1;
+    if(b.z > 250 || b.z < -250) b.dz*=-1;
+
+    // تحريك الفراشة مع حركة الأجنحة
+    b.el.style.transform = `translate3d(${b.x}px, ${b.y}px, ${b.z}px) rotateY(${b.flap}deg) rotateX(${Math.sin(b.flap*Math.PI/180)*15}deg)`;
+  });
+  requestAnimationFrame(animateButterflies);
 }
 
-}());
+animateButterflies();
 
-}
-function createButterfly(){
-
-let butterfly=document.createElement("div");
-
-butterfly.innerHTML="🦋";
-
-butterfly.style.position="fixed";
-butterfly.style.fontSize=(20+Math.random()*20)+"px";
-butterfly.style.left=Math.random()*100+"vw";
-butterfly.style.top="100vh";
-butterfly.style.pointerEvents="none";
-butterfly.style.zIndex="999";
-
-document.body.appendChild(butterfly);
-
-let pos=100;
-
-let fly=setInterval(()=>{
-
-pos-=0.5+Math.random();
-
-butterfly.style.top=pos+"vh";
-butterfly.style.left=(parseFloat(butterfly.style.left)+Math.sin(pos)*0.5)+"vw";
-
-if(pos<-10){
-
-butterfly.remove();
-clearInterval(fly);
-
-}
-
-},20);
-
-}
-
-setInterval(createButterfly,1200);
 </script>
 
 </body>
