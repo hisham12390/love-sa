@@ -55,6 +55,18 @@ button{
   transform-style: preserve-3d;
   transition: transform 0.1s linear;
 }
+
+/* ⭐ تأثير النجوم */
+.star{
+  position:absolute;
+  width:8px;
+  height:8px;
+  background:yellow;
+  border-radius:50%;
+  opacity:1;
+  pointer-events:none;
+  z-index:5;
+}
 </style>
 </head>
 
@@ -95,8 +107,10 @@ function typeWriter(text){
   write();
 }
 
+// ---------- إنشاء المشاهد ----------
 function nextScene(){
   scene++;
+  createStars(25); // ⭐ ظهور النجوم عند كل تغيير مشهد
   if(scene==2){
     document.body.style.backgroundImage="url('love2.jpg')";
     typeWriter(quote1);
@@ -110,6 +124,7 @@ function nextScene(){
   }
 }
 
+// ---------- إنشاء أزرار نعم / لا ----------
 function createButtons(){
   let yes=document.createElement("button");
   yes.innerHTML="نعم ❤️";
@@ -119,6 +134,7 @@ function createButtons(){
   no.id="noBtn";
   document.body.appendChild(yes);
   document.body.appendChild(no);
+
   let yesSize=1;
   let noSize=1;
   no.addEventListener("mouseover",function(){
@@ -133,14 +149,17 @@ function createButtons(){
   });
 }
 
+// ---------- نعم الإجابة ----------
 function yesAnswer(){
   document.body.style.backgroundImage="url('love4.jpg')";
   typeWriter(quote2);
   let buttons=document.querySelectorAll("button");
   buttons.forEach(btn=>btn.style.display="none");
   fireworks();
+  createStars(30); // ⭐ ظهور النجوم عند الضغط على نعم
 }
 
+// ---------- الكونفيتي ----------
 function fireworks(){
   var duration=5000;
   var end=Date.now()+duration;
@@ -151,7 +170,7 @@ function fireworks(){
   }());
 }
 
-// ---------- حركة الفراشات في كل الشاشة مع جناح متموج ----------
+// ---------- حركة الفراشات ----------
 const butterflyElements = Array.from(document.querySelectorAll(".butterfly"));
 const butterflies = butterflyElements.map(el => ({
     el,
@@ -172,7 +191,6 @@ function animateButterflies(){
         b.z += b.dz;
         b.flap += b.flapSpeed*10;
 
-        // انعكاس عند حدود الشاشة
         if(b.x < 0 || b.x > window.innerWidth-80) b.dx *= -1;
         if(b.y < 0 || b.y > window.innerHeight-80) b.dy *= -1;
         if(b.z < -250 || b.z > 250) b.dz *= -1;
@@ -182,10 +200,30 @@ function animateButterflies(){
     });
     requestAnimationFrame(animateButterflies);
 }
-
 animateButterflies();
 
-// ---------- الزر الرئيسي ----------
+// ---------- وظيفة إنشاء النجوم ----------
+function createStars(count=20){
+  for(let i=0;i<count;i++){
+    const star=document.createElement('div');
+    star.classList.add('star');
+    star.style.left=Math.random()*window.innerWidth+'px';
+    star.style.top=Math.random()*window.innerHeight+'px';
+    document.body.appendChild(star);
+
+    let life=50;
+    let id=setInterval(()=>{
+      star.style.opacity-=0.02;
+      life--;
+      if(life<=0){
+        clearInterval(id);
+        star.remove();
+      }
+    },16);
+  }
+}
+
+// ---------- ربط الزر الرئيسي ----------
 document.getElementById("nextBtn").addEventListener("click", nextScene);
 </script>
 </body>
