@@ -62,14 +62,12 @@ position:absolute;
 
 <button id="nextBtn" onclick="nextScene()">نعم جاهزة ❤️</button>
 
-
 <script>
 
 let scene = 1;
 
 let quote1 = "حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
 let quote2 = "وفي ليلة العيد، بين الأضواء والفرح، أدركت أن أجمل أعيادي هي تلك التي تكونين فيها بقربي.";
-
 
 function typeWriter(text){
 
@@ -88,7 +86,6 @@ write();
 
 }
 
-
 function nextScene(){
 
 scene++;
@@ -97,16 +94,14 @@ if(scene==2){
 
 document.body.style.backgroundImage="url('love2.jpg')";
 typeWriter(quote1);
-
 document.getElementById("nextBtn").innerHTML="التالي ➜";
 
 }
+
 else if(scene==3){
 
 document.body.style.backgroundImage="url('love3.jpg')";
-
 document.getElementById("message").innerHTML="هل مستعدة أن تكوني أنتِ عيدي؟";
-
 document.getElementById("nextBtn").style.display="none";
 
 createButtons();
@@ -114,7 +109,6 @@ createButtons();
 }
 
 }
-
 
 function createButtons(){
 
@@ -128,7 +122,6 @@ no.id="noBtn";
 
 document.body.appendChild(yes);
 document.body.appendChild(no);
-
 
 let yesSize=1;
 let noSize=1;
@@ -151,27 +144,18 @@ no.style.transform="scale("+noSize+")";
 
 }
 
-
 function yesAnswer(){
 
 document.body.style.backgroundImage="url('love4.jpg')";
 
 typeWriter(quote2);
 
-let buttons = document.querySelectorAll("button");
-buttons.forEach(btn => btn.style.display="none");
+let buttons=document.querySelectorAll("button");
+buttons.forEach(btn=>btn.style.display="none");
 
 fireworks();
 
 }
-document.body.style.backgroundImage="url('love4.jpg')";
-
-typeWriter(quote2);
-
-fireworks();
-
-}
-
 
 function fireworks(){
 
@@ -203,9 +187,6 @@ requestAnimationFrame(frame);
 }
 
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
