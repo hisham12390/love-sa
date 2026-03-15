@@ -1,66 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-
-<meta charset="UTF-8">
-
-<!-- الخط -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
-
-<!-- مكتبة الألعاب النارية -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<style>
-
-body{
-margin:0;
-height:100vh;
-background-image:url("love1.jpg");
-background-size:cover;
-background-position:center;
-font-family:'Cairo', sans-serif;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-color:white;
-text-align:center;
-}
-
-#yesBtn,#noBtn{
-font-size:25px;
-padding:12px 30px;
-margin:20px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-}
-
-#yesBtn{
-background:#27ae60;
-color:white;
-}
-
-#noBtn{
-background:#e74c3c;
-color:white;
-position:absolute;
-}
-
-</style>
-
-</head>
-<meta charset="UTF-8">
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
-
-<style>
-
-body{
-margin:0;
-height:100vh;<!DOCTYPE html>
-<html lang="ar">
-<head>
 <meta charset="UTF-8">
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
@@ -72,7 +12,6 @@ height:100vh;<!DOCTYPE html>
 body{
 margin:0;
 height:100vh;
-background-image:url("love.jpg");
 background-size:cover;
 background-position:center;
 display:flex;
@@ -84,10 +23,11 @@ color:white;
 font-family:'Cairo', sans-serif;
 transition:1s;
 overflow:hidden;
+background-image:url("love1.jpg");
 }
 
 .text{
-font-size:40px;
+font-size:38px;
 width:70%;
 text-shadow:2px 2px 10px black;
 margin-bottom:30px;
@@ -101,17 +41,7 @@ border-radius:30px;
 background:#2ecc71;
 color:white;
 cursor:pointer;
-box-shadow:0 0 15px rgba(0,0,0,0.5);
 margin:10px;
-}
-
-button:hover{
-transform:scale(1.1);
-}
-
-#questionBox{
-display:none;
-font-size:35px;
 }
 
 #noBtn{
@@ -128,33 +58,23 @@ position:absolute;
 <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="text" id="message"></div>
+<div class="text" id="message">هل أنتِ جاهزة؟</div>
 
-<button id="startBtn" onclick="nextScene()">اضغطي هنا ❤️</button>
-
-
-<div id="questionBox">
-
-<p>هل ممكن كل عيد تكونين أنتِ عيدي؟</p>
-
-<button id="yesBtn" onclick="yesAnswer()">نعم ❤️</button>
-
-<button id="noBtn">لا</button>
-
-</div>
+<button id="nextBtn" onclick="nextScene()">نعم جاهزة ❤️</button>
 
 
 <script>
 
-let text1 = "حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
-let text2 = "وفي ليلة العيد، بين الأضواء والفرح، أدركت أن أجمل أعيادي هي تلك التي تكونين فيها بقربي.";
+let scene = 1;
 
-let i = 0;
+let quote1 = "حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
+let quote2 = "وفي ليلة العيد، بين الأضواء والفرح، أدركت أن أجمل أعيادي هي تلك التي تكونين فيها بقربي.";
+
 
 function typeWriter(text){
 
+let i = 0;
 document.getElementById("message").innerHTML="";
-i=0;
 
 function write(){
 if(i < text.length){
@@ -168,79 +88,96 @@ write();
 
 }
 
-typeWriter(text1);
-
-
 
 function nextScene(){
 
+scene++;
+
+if(scene==2){
+
 document.body.style.backgroundImage="url('love2.jpg')";
+typeWriter(quote1);
 
-typeWriter(text2);
+}
 
-document.getElementById("startBtn").style.display="none";
+else if(scene==3){
 
-setTimeout(()=>{
-document.getElementById("questionBox").style.display="block";
-},3000);
+document.body.style.backgroundImage="url('love3.jpg')";
+
+document.getElementById("message").innerHTML="هل مستعدة أن تكوني أنتِ عيدي؟";
+
+document.getElementById("nextBtn").style.display="none";
+
+createButtons();
+
+}
 
 }
 
 
+function createButtons(){
 
-let yes = document.getElementById("yesBtn");
-let no = document.getElementById("noBtn");
+let yes=document.createElement("button");
+yes.innerHTML="نعم ❤️";
+yes.onclick=yesAnswer;
 
-let yesSize = 1;
-let noSize = 1;
+let no=document.createElement("button");
+no.innerHTML="لا";
+no.id="noBtn";
+
+document.body.appendChild(yes);
+document.body.appendChild(no);
+
+
+let yesSize=1;
+let noSize=1;
 
 no.addEventListener("mouseover",function(){
 
-let x = Math.random()*window.innerWidth*0.8;
-let y = Math.random()*window.innerHeight*0.8;
+let x=Math.random()*window.innerWidth*0.8;
+let y=Math.random()*window.innerHeight*0.8;
 
-no.style.left = x+"px";
-no.style.top = y+"px";
+no.style.left=x+"px";
+no.style.top=y+"px";
 
-yesSize += 0.1;
-noSize -= 0.05;
+yesSize+=0.1;
+noSize-=0.05;
 
 yes.style.transform="scale("+yesSize+")";
 no.style.transform="scale("+noSize+")";
 
 });
 
+}
 
 
 function yesAnswer(){
 
-document.body.style.backgroundImage="url('love3.jpg')";
+document.body.style.backgroundImage="url('love4.jpg')";
 
-document.getElementById("questionBox").innerHTML =
-"<h1>إذن… كل أعيادي ستكون معك ❤️</h1>";
+typeWriter(quote2);
 
 fireworks();
 
 }
 
 
-
 function fireworks(){
 
-var duration = 5000;
-var end = Date.now() + duration;
+var duration=5000;
+var end=Date.now()+duration;
 
 (function frame(){
 
 confetti({
-particleCount:5,
+particleCount:6,
 angle:60,
 spread:55,
 origin:{x:0}
 });
 
 confetti({
-particleCount:5,
+particleCount:6,
 angle:120,
 spread:55,
 origin:{x:1}
@@ -255,6 +192,9 @@ requestAnimationFrame(frame);
 }
 
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
