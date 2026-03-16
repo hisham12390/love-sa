@@ -89,6 +89,15 @@ button{
 
 // ✨ نجوم تخرج من نفس الزر
 function magicStars(x,y){
+  // ✨ كل ضغطة زر تطلق النجوم من مركز الزر
+document.addEventListener("click", function(e){
+  if(e.target.tagName === "BUTTON"){
+    const rect = e.target.getBoundingClientRect();
+    const x = rect.left + rect.width/2;
+    const y = rect.top + rect.height/2;
+    magicStars(x,y);
+  }
+});
 
   for(let i=0;i<200;i++){   // عدد النجوم
     const star=document.createElement("div");
