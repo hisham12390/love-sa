@@ -55,7 +55,7 @@ button{
   transform-style:preserve-3d;
 }
 
-/* شرارات */
+/* شرارات النجوم */
 .spark{
   position:absolute;
   width:6px;
@@ -77,6 +77,7 @@ button{
 <div class="text" id="message">اهلا صافيه هاي هدية الكي ف أنتِ جاهزة:)؟</div>
 <button id="nextBtn">نعم جاهزة ❤️</button>
 
+<!-- صور الفراشات -->
 <img src="butterfly1.png" class="butterfly">
 <img src="butterfly2.png" class="butterfly">
 <img src="butterfly3.png" class="butterfly">
@@ -86,22 +87,10 @@ button{
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-
-// ✨ نجوم تخرج من نفس الزر
+// ✨ دالة النجوم السحرية
 function magicStars(x,y){
-  // ✨ كل ضغطة زر تطلق النجوم من مركز الزر
-document.addEventListener("click", function(e){
-  if(e.target.tagName === "BUTTON"){
-    const rect = e.target.getBoundingClientRect();
-    const x = rect.left + rect.width/2;
-    const y = rect.top + rect.height/2;
-    magicStars(x,y);
-  }
-});
-
-  for(let i=0;i<200;i++){   // عدد النجوم
+  for(let i=0;i<100;i++){ // عدد النجوم
     const star=document.createElement("div");
-
     star.style.position="absolute";
     star.style.width="6px";
     star.style.height="6px";
@@ -111,12 +100,11 @@ document.addEventListener("click", function(e){
     star.style.left=x+"px";
     star.style.top=y+"px";
     star.style.boxShadow="0 0 10px yellow,0 0 20px white";
-
     document.body.appendChild(star);
 
-    // ✨ السرعة العشوائية باتجاهات مختلفة
-    const angle = Math.random()*2*Math.PI; // زاوية 0-360 درجة
-    const speed = Math.random()*4 + 2;     // السرعة (2-6) يمكنك تعديلها
+    // سرعة واتجاه عشوائي
+    const angle = Math.random()*2*Math.PI;
+    const speed = Math.random()*2 + 1; // سرعة أقل
     let dx = Math.cos(angle)*speed;
     let dy = Math.sin(angle)*speed;
 
@@ -125,11 +113,9 @@ document.addEventListener("click", function(e){
     const move=setInterval(()=>{
       x+=dx;
       y+=dy;
-
       star.style.left=x+"px";
       star.style.top=y+"px";
       star.style.opacity=life/40;
-
       life--;
       if(life<=0){
         clearInterval(move);
@@ -138,11 +124,10 @@ document.addEventListener("click", function(e){
     },16);
   }
 }
+
 // ---------- النصوص ----------
 let scene = 1;
-
 let quote1="الى صاحبة الاعين الخضراء حين نظرتُ إلى عينيكِ الخضراوين، شعرتُ وكأن فراشات الربيع كلها استيقظت في قلبي.";
-
 let quote2="وبليلة العيد، بين الأضواء والفرح، عرفت أن أجمل أعيادي هي تلك التي تكونين فيها بقربي.";
 
 function typeWriter(text){
@@ -160,15 +145,12 @@ function typeWriter(text){
 
 // ---------- المشاهد ----------
 function nextScene(){
-
   scene++;
-
   if(scene==2){
     document.body.style.backgroundImage="url('love2.jpg')";
     typeWriter(quote1);
     document.getElementById("nextBtn").innerHTML="التالي ➜";
   }
-
   else if(scene==3){
     document.body.style.backgroundImage="url('love3.jpg')";
     document.getElementById("message").innerHTML="هل ممكن تكونين أنتِ عيدي؟";
@@ -179,7 +161,6 @@ function nextScene(){
 
 // ---------- أزرار نعم لا ----------
 function createButtons(){
-
   let yes=document.createElement("button");
   yes.innerHTML="نعم ❤️";
   yes.onclick=yesAnswer;
@@ -192,18 +173,15 @@ function createButtons(){
   document.body.appendChild(no);
 
   no.addEventListener("mouseover",function(){
-
     let x=Math.random()*window.innerWidth*0.8;
     let y=Math.random()*window.innerHeight*0.8;
-
     no.style.left=x+"px";
     no.style.top=y+"px";
   });
 }
 
-// ---------- نعم ----------
+// ---------- نعم الإجابة ----------
 function yesAnswer(){
-
   document.body.style.backgroundImage="url('love4.jpg')";
   typeWriter(quote2);
 
@@ -213,23 +191,20 @@ function yesAnswer(){
   fireworks();
 }
 
-// ---------- كونفيتي ----------
+// ---------- الكونفيتي ----------
 function fireworks(){
-
   var duration=4000;
   var end=Date.now()+duration;
-
   (function frame(){
     confetti({particleCount:5,angle:60,spread:55,origin:{x:0}});
     confetti({particleCount:5,angle:120,spread:55,origin:{x:1}});
-
     if(Date.now()<end){
       requestAnimationFrame(frame);
     }
   })();
 }
 
-// ---------- حركة الفراشات في كل الشاشة مع جناح متموج ----------
+// ---------- حركة الفراشات ----------
 const butterflyElements = Array.from(document.querySelectorAll(".butterfly"));
 const butterflies = butterflyElements.map(el => ({
     el,
@@ -250,7 +225,6 @@ function animateButterflies(){
         b.z += b.dz;
         b.flap += b.flapSpeed*10;
 
-        // انعكاس عند حدود الشاشة
         if(b.x < 0 || b.x > window.innerWidth-80) b.dx *= -1;
         if(b.y < 0 || b.y > window.innerHeight-80) b.dy *= -1;
         if(b.z < -250 || b.z > 250) b.dz *= -1;
@@ -262,8 +236,19 @@ function animateButterflies(){
 }
 
 animateButterflies();
-// زر البداية
+
+// ---------- زر البداية ----------
 document.getElementById("nextBtn").addEventListener("click",nextScene);
+
+// ---------- كل ضغطة زر تطلق النجوم من مركزه ----------
+document.addEventListener("click", function(e){
+  if(e.target.tagName === "BUTTON"){
+    const rect = e.target.getBoundingClientRect();
+    const x = rect.left + rect.width/2;
+    const y = rect.top + rect.height/2;
+    magicStars(x,y);
+  }
+});
 
 </script>
 
