@@ -90,8 +90,7 @@ button{
 // ✨ نجوم تخرج من نفس الزر
 function magicStars(x,y){
 
-  for(let i=0;i<200;i++){   // عدد النجوم
-
+  for(let i=0;i<40;i++){   // عدد النجوم
     const star=document.createElement("div");
 
     star.style.position="absolute";
@@ -106,12 +105,15 @@ function magicStars(x,y){
 
     document.body.appendChild(star);
 
-    let dx=(Math.random()-0.5)*4;
-    let dy=(Math.random()-0.5)*4;
+    // ✨ السرعة العشوائية باتجاهات مختلفة
+    const angle = Math.random()*2*Math.PI; // زاوية 0-360 درجة
+    const speed = Math.random()*4 + 2;     // السرعة (2-6) يمكنك تعديلها
+    let dx = Math.cos(angle)*speed;
+    let dy = Math.sin(angle)*speed;
+
     let life=40;
 
     const move=setInterval(()=>{
-
       x+=dx;
       y+=dy;
 
@@ -120,31 +122,13 @@ function magicStars(x,y){
       star.style.opacity=life/40;
 
       life--;
-
       if(life<=0){
         clearInterval(move);
         star.remove();
       }
-
     },16);
   }
 }
-
-// يعمل مع كل الأزرار
-document.addEventListener("click",function(e){
-
-  if(e.target.tagName==="BUTTON"){
-
-    const rect=e.target.getBoundingClientRect();
-
-    const x=rect.left + rect.width/2;
-    const y=rect.top + rect.height/2;
-
-    magicStars(x,y);
-
-  }
-
-});
 // ---------- النصوص ----------
 let scene = 1;
 
