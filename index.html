@@ -213,40 +213,39 @@ function fireworks(){
   })();
 }
 
-// ---------- حركة الفراشات ----------
+// ---------- حركة الفراشات في كل الشاشة مع جناح متموج ----------
 const butterflyElements = Array.from(document.querySelectorAll(".butterfly"));
-
 const butterflies = butterflyElements.map(el => ({
-  el,
-  x:Math.random()*window.innerWidth,
-  y:Math.random()*window.innerHeight,
-  dx:(Math.random()-0.5)*2,
-  dy:(Math.random()-0.5)*2,
-  flap:Math.random()*360
+    el,
+    x: Math.random()*window.innerWidth,
+    y: Math.random()*window.innerHeight,
+    z: (Math.random()-0.5)*500,
+    dx: (Math.random()-0.5)*2,
+    dy: (Math.random()-0.5)*2,
+    dz: (Math.random()-0.5)*1,
+    flap: Math.random()*360,
+    flapSpeed: Math.random()*0.3 + 0.2
 }));
 
 function animateButterflies(){
+    butterflies.forEach(b=>{
+        b.x += b.dx;
+        b.y += b.dy;
+        b.z += b.dz;
+        b.flap += b.flapSpeed*10;
 
-  butterflies.forEach(b=>{
+        // انعكاس عند حدود الشاشة
+        if(b.x < 0 || b.x > window.innerWidth-80) b.dx *= -1;
+        if(b.y < 0 || b.y > window.innerHeight-80) b.dy *= -1;
+        if(b.z < -250 || b.z > 250) b.dz *= -1;
 
-    b.x+=b.dx;
-    b.y+=b.dy;
-    b.flap+=2;
-
-    if(b.x<0 || b.x>window.innerWidth-80) b.dx*=-1;
-    if(b.y<0 || b.y>window.innerHeight-80) b.dy*=-1;
-
-    const wing=Math.sin(b.flap*Math.PI/180)*15;
-
-    b.el.style.transform=
-    `translate(${b.x}px,${b.y}px) rotate(${wing}deg)`;
-  });
-
-  requestAnimationFrame(animateButterflies);
+        const wing = Math.sin(b.flap*Math.PI/180)*15;
+        b.el.style.transform = `translate3d(${b.x}px, ${b.y}px, ${b.z}px) rotateY(${b.flap}deg) rotateX(${wing}deg)`;
+    });
+    requestAnimationFrame(animateButterflies);
 }
 
 animateButterflies();
-
 // زر البداية
 document.getElementById("nextBtn").addEventListener("click",nextScene);
 
