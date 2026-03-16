@@ -87,28 +87,27 @@ button{
 
 <script>
 
-// ✨ شرارات سحرية عند الضغط على أي زر
-function magicSparkles(x,y){
+// ✨ نجوم تخرج من نفس الزر
+function magicStars(x,y){
 
-  for(let i=0;i<80;i++){
+  for(let i=0;i<100;i++){   // عدد النجوم
 
-    const spark=document.createElement("div");
+    const star=document.createElement("div");
 
-    spark.style.position="absolute";
-    spark.style.width="6px";
-    spark.style.height="6px";
-    spark.style.background="white";
-    spark.style.borderRadius="50%";
-    spark.style.pointerEvents="none";
-    spark.style.left=x+"px";
-    spark.style.top=y+"px";
-    spark.style.boxShadow="0 0 10px yellow,0 0 20px white";
+    star.style.position="absolute";
+    star.style.width="6px";
+    star.style.height="6px";
+    star.style.background="yellow";
+    star.style.borderRadius="50%";
+    star.style.pointerEvents="none";
+    star.style.left=x+"px";
+    star.style.top=y+"px";
+    star.style.boxShadow="0 0 10px yellow,0 0 20px white";
 
-    document.body.appendChild(spark);
+    document.body.appendChild(star);
 
-    let dx=(Math.random()-0.5)*6;
-    let dy=(Math.random()-0.5)*6;
-
+    let dx=(Math.random()-0.5)*8;
+    let dy=(Math.random()-0.5)*8;
     let life=40;
 
     const move=setInterval(()=>{
@@ -116,38 +115,36 @@ function magicSparkles(x,y){
       x+=dx;
       y+=dy;
 
-      spark.style.left=x+"px";
-      spark.style.top=y+"px";
-
-      spark.style.opacity=life/40;
+      star.style.left=x+"px";
+      star.style.top=y+"px";
+      star.style.opacity=life/40;
 
       life--;
 
       if(life<=0){
         clearInterval(move);
-        spark.remove();
+        star.remove();
       }
 
     },16);
   }
 }
 
-// يعمل مع كل الأزرار حتى التي تُنشأ لاحقًا
+// يعمل مع كل الأزرار
 document.addEventListener("click",function(e){
 
   if(e.target.tagName==="BUTTON"){
 
     const rect=e.target.getBoundingClientRect();
 
-    const x=rect.left+rect.width/2;
-    const y=rect.top+rect.height/2;
+    const x=rect.left + rect.width/2;
+    const y=rect.top + rect.height/2;
 
-    magicSparkles(x,y);
+    magicStars(x,y);
 
   }
 
 });
-
 // ---------- النصوص ----------
 let scene = 1;
 
