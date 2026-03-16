@@ -204,5 +204,44 @@ animateButterflies();
 
 });
 </script>
+  // ✨ شرارات سحرية عند الضغط على أي زر
+function magicSparkles(){
+
+  for(let i=0;i<25;i++){
+
+    const spark=document.createElement("div");
+    spark.style.position="absolute";
+    spark.style.width="6px";
+    spark.style.height="6px";
+    spark.style.background="white";
+    spark.style.borderRadius="50%";
+    spark.style.pointerEvents="none";
+    spark.style.left=(Math.random()*window.innerWidth)+"px";
+    spark.style.top=(Math.random()*window.innerHeight)+"px";
+
+    spark.style.boxShadow="0 0 10px yellow, 0 0 20px white";
+
+    document.body.appendChild(spark);
+
+    let y=parseFloat(spark.style.top);
+
+    const move=setInterval(()=>{
+      y-=2;
+      spark.style.top=y+"px";
+      spark.style.opacity-=0.03;
+
+      if(spark.style.opacity<=0){
+        clearInterval(move);
+        spark.remove();
+      }
+
+    },16);
+  }
+}
+
+// يعمل مع كل الأزرار
+document.querySelectorAll("button").forEach(btn=>{
+  btn.addEventListener("click", magicSparkles);
+});
 </body>
 </html>
