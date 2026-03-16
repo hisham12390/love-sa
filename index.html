@@ -87,40 +87,66 @@ button{
 
 <script>
 
-// ---------- تأثير الشرارات ----------
-function magicSparkles(){
+// ✨ شرارات سحرية عند الضغط على أي زر
+function magicSparkles(x,y){
+
   for(let i=0;i<20;i++){
 
     const spark=document.createElement("div");
-    spark.className="spark";
 
-    spark.style.left=Math.random()*window.innerWidth+"px";
-    spark.style.top=Math.random()*window.innerHeight+"px";
+    spark.style.position="absolute";
+    spark.style.width="6px";
+    spark.style.height="6px";
+    spark.style.background="white";
+    spark.style.borderRadius="50%";
+    spark.style.pointerEvents="none";
+    spark.style.left=x+"px";
+    spark.style.top=y+"px";
+    spark.style.boxShadow="0 0 10px yellow,0 0 20px white";
 
     document.body.appendChild(spark);
 
-    let y=parseFloat(spark.style.top);
+    let dx=(Math.random()-0.5)*6;
+    let dy=(Math.random()-0.5)*6;
+
+    let life=40;
 
     const move=setInterval(()=>{
-      y-=2;
-      spark.style.top=y+"px";
-      spark.style.opacity-=0.03;
 
-      if(spark.style.opacity<=0){
+      x+=dx;
+      y+=dy;
+
+      spark.style.left=x+"px";
+      spark.style.top=y+"px";
+
+      spark.style.opacity=life/40;
+
+      life--;
+
+      if(life<=0){
         clearInterval(move);
         spark.remove();
       }
+
     },16);
   }
 }
 
-// يعمل مع أي زر
+// يعمل مع كل الأزرار حتى التي تُنشأ لاحقًا
 document.addEventListener("click",function(e){
-  if(e.target.tagName==="BUTTON"){
-    magicSparkles();
-  }
-});
 
+  if(e.target.tagName==="BUTTON"){
+
+    const rect=e.target.getBoundingClientRect();
+
+    const x=rect.left+rect.width/2;
+    const y=rect.top+rect.height/2;
+
+    magicSparkles(x,y);
+
+  }
+
+});
 
 // ---------- النصوص ----------
 let scene = 1;
