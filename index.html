@@ -202,54 +202,6 @@ function animateButterflies(){
 }
 animateButterflies();
 
-// ---------- وظيفة إنشاء النجوم ----------
-function createStars(count=20){
-  for(let i=0;i<count;i++){
-    const star=document.createElement('div');
-    star.classList.add('star');
-    star.style.left=Math.random()*window.innerWidth+'px';
-    star.style.top=Math.random()*window.innerHeight+'px';
-    document.body.appendChild(star);
-
-    let life=50;
-    let id=setInterval(()=>{
-      star.style.opacity-=0.02;
-      life--;
-      if(life<=0){
-        clearInterval(id);
-        star.remove();
-      }
-    },16);
-  }
-}
-
-// ---------- ربط الزر الرئيسي ----------
-document.getElementById("nextBtn").addEventListener("click", nextScene);
-  // ⭐ تأثير نجوم عند الضغط على أي زر
-function showStars() {
-  for (let i = 0; i < 20; i++) {
-
-    const star = document.createElement("div");
-    star.style.position = "absolute";
-    star.style.width = "8px";
-    star.style.height = "8px";
-    star.style.background = "yellow";
-    star.style.borderRadius = "50%";
-    star.style.left = Math.random() * window.innerWidth + "px";
-    star.style.top = Math.random() * window.innerHeight + "px";
-    star.style.pointerEvents = "none";
-
-    document.body.appendChild(star);
-
-    setTimeout(() => {
-      star.remove();
-    }, 600);
-  }
-}
-
-// ربط التأثير مع جميع الأزرار
-document.querySelectorAll("button").forEach(btn => {
-  btn.addEventListener("click", showStars);
 });
 </script>
 </body>
